@@ -1,0 +1,33 @@
+
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Checking out source code'
+                git branch: 'main',
+                    url: 'https://github.com/Ivin2006/jenkinsdevops.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building Application'
+                bat 'dir'
+                bat 'if not exist index.html exit /b 1'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing index.html file'
+
+                bat 'findstr /C:"Welcome to Jenkins CI Pipeline" index.html'
+
+                echo 'HTML File Test Passed'
+            }
+        }
+    }
+}
